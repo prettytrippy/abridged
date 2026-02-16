@@ -6,6 +6,8 @@ import scipy
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
 
+nltk.download('punkt_tab')
+
 def sentence_split(text):
     return list(sent_tokenize(text))
 
