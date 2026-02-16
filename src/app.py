@@ -112,5 +112,4 @@ if __name__ == "__main__":
     #     port=9876,
     #     reload=True  # Enable auto-reload during development
     # )
-    port = int(os.environ.get("PORT", 9876))  # <-- ADD THIS LINE
-    uvicorn.run("app:app", host="0.0.0.0", port=port)
+    uvicorn.run("app:app", host="0.0.0.0", port=8080)
