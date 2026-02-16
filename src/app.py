@@ -105,7 +105,7 @@ async def record_preference(request: Request):
 if __name__ == "__main__":
     # Run the server
     uvicorn.run(
-        "main:app",
+        "app:app",
         host="0.0.0.0",
         port=9876,
         reload=True  # Enable auto-reload during development
