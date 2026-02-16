@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 import uvicorn
 from typing import Optional
 import io
@@ -22,9 +22,8 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def root():
-    """Health check endpoint"""
-    return {"status": "ok", "message": "PDF Processing API is running"}
+async def read_root():
+    return FileResponse("index.html")
 
 @app.post("/upload-pdf")
 async def upload_pdf(
