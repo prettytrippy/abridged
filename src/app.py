@@ -9,6 +9,8 @@ from summarize import summarize
 from ab import params, get_ab_params, store_preference
 import numpy as np
 import os
+from pathlib import Path
+
 
 app = FastAPI(title="Tripp's No-AI Abridger")
 
@@ -23,7 +25,7 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return FileResponse("index.html")
+    return FileResponse(Path(__file__).parent / "index.html")
 
 @app.post("/upload-pdf")
 async def upload_pdf(
