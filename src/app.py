@@ -8,6 +8,7 @@ from file_io import read_file
 from summarize import summarize
 from ab import params, get_ab_params, store_preference
 import numpy as np
+import os
 
 app = FastAPI(title="Tripp's No-AI Abridger")
 
@@ -104,9 +105,11 @@ async def record_preference(request: Request):
 
 if __name__ == "__main__":
     # Run the server
-    uvicorn.run(
-        "app:app",
-        host="0.0.0.0",
-        port=9876,
-        reload=True  # Enable auto-reload during development
-    )
+    # uvicorn.run(
+    #     "app:app",
+    #     host="0.0.0.0",
+    #     port=9876,
+    #     reload=True  # Enable auto-reload during development
+    # )
+    port = int(os.environ.get("PORT", 9876))  # <-- ADD THIS LINE
+    uvicorn.run("app:app", host="0.0.0.0", port=port)
