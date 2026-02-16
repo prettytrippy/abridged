@@ -7,7 +7,7 @@ name = "abridged"
 dynamic = ["version"]
 description = "Summarize texts without generative AI."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = { file = "LICENSE" }
 authors = [{ name = "Richard Dow", email = "trippdow@gmail.com" }]
 keywords = ["NLP", "GOFAI", "summarization"]
