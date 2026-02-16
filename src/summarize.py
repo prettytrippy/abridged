@@ -1,5 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
+import nltk
 from nltk.tokenize import sent_tokenize
 import numpy as np
 import scipy
