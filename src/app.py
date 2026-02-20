@@ -11,7 +11,6 @@ import numpy as np
 import os
 from pathlib import Path
 
-
 app = FastAPI(title="Tripp's No-AI Abridger")
 
 # CORS middleware - adjust origins as needed for your frontend

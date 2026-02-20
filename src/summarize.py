@@ -6,6 +6,7 @@ import numpy as np
 import scipy
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
+from file_io import file_search
 
 nltk.download('punkt_tab')
 
@@ -18,38 +19,27 @@ def matricize(sentences, max_df, min_df):
         max_df=max_df, min_df=min_df,
         norm=None)
     vectors = vectorizer.fit_transform(sentences)
-    return cosine_similarity(vectors)
-
-def pagerank(A, alpha=0.85):
-    n = A.shape[0]
-
-    # Degree matrix
-    deg = np.array(A.sum(axis=1)).ravel()
-    deg[deg == 0] = 1e-8  # avoid division by zero
-
-    Dinv = sp.diags(1.0 / deg)
-    M = sp.eye(n) - alpha * Dinv @ A
-
-    # RHS: uniform teleportation
-    rhs = np.full(n, (1 - alpha) / n)
-
-    pr, info = spla.cg(M, rhs, maxiter=4)
-    if info != 0:
-        raise RuntimeError(f"CG did not converge (info={info})")
-
-    pr /= pr.sum()
-    return pr
-
-def score(M, alpha):
-    return pagerank(M, alpha)
+    return vectors
 
 def rank(scores, sentences):
     return sorted(((scores[i], s, i) for i, s in enumerate(sentences)), reverse=True)
     
-def summarize(text, slider_value, max_df, min_df, alpha):   
+def summarize(text, slider_value, max_df, min_df, k):   
     sentences = sentence_split(text)
+
     M = matricize(sentences, max_df, min_df)
-    scores = score(M, alpha)
+
+    U, S, V = np.linalg.svd(M.toarray().T, full_matrices=False)
+
+    V = V.T
+    Vmu = np.mean(V, axis=0)
+    Vstd = np.std(V, axis=0)
+
+    V[V < Vmu + k * Vstd] = 0
+    V = V.T
+
+    scores = np.sum((np.diag(S) @ V), axis=0)
+
     ranked = rank(scores, sentences)
 
     n = int(len(sentences) * slider_value/100)
@@ -64,3 +54,4 @@ def summarize(text, slider_value, max_df, min_df, alpha):
     summary = "\n".join([s for (i, s) in sorted_possibilities])
 
     return summary
+

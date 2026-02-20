@@ -1,9 +1,9 @@
 import numpy as np
 
-params = [0.9, 0.1, 0.85]
+params = [0.9, 0.1, 0.0]
 
 def get_ab_params():
-    std = [1e-2, 1e-1, 1e-1]
+    std = [1e-1, 1e-1, 1e-1]
     a = np.random.normal(params, std)
     b = np.random.normal(params, std)
     a[a < 0] = 0

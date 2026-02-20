@@ -80,6 +80,16 @@ def read_file(filename, file_bytes, start_page, end_page):
     extracted_text = process_file(file_bytes, file_extension, start_page, end_page)
     return extracted_text
 
+def read_file_uhh(pdf_path):
+    text = ''
+    pdf_document = fitz.open(pdf_path)
+    
+    for page_num in range(pdf_document.page_count):
+        page = pdf_document.load_page(page_num)
+        text += page.get_text()
+    pdf_document.close()
+    return text
+    
 def file_search():
     filepath = filedialog.askopenfilename() 
-    return read_file(filepath)
+    return read_file_uhh(filepath)
